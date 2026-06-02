@@ -10,8 +10,8 @@ run: main
 	echo "\n" && ./main
 
 # $^ - this variable holds all dependencies of given target
-main: main.o Book.o
-	${CXX} ${LDFLAGS} main.o Book.o -o main
+main: main.o Book.o BookList.o
+	${CXX} ${LDFLAGS} main.o Book.o BookList.o -o main
 
 # $< - this variable holds only first dependency of given target
 # $@ - this variables holds the target itself
@@ -20,6 +20,9 @@ main.o: main.cpp
 
 Book.o: Book.cpp
 	${CXX} ${CXXFLAGS} -c Book.cpp -o Book.o
+
+BookList.o: BookList.cpp
+	${CXX} ${CXXFLAGS} -c BookList.cpp -o BookList.o
 
 clean:
 	rm -f *.o main

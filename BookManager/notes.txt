@@ -1,0 +1,32 @@
+std::optional<int> Rating;
+std::optional<bool> Liked;
+ReadingState State;
+std::optional<int> getRating() const;
+std::optional<bool> getLiked() const;
+ReadingState getReadingState() const;
+void setRating(std::optional<int> Rating);
+void setLiked(std::optional<bool> Liked);
+void setReadingState(ReadingState State);
+
+std::string Book::getReadingStateString() const {
+    switch (State) {
+        case ReadingState::PlanToRead:
+            return "PlanToRead";
+        case ReadingState::Reading:
+            return "Reading";
+        case ReadingState::Dropped:
+            return "Dropped";
+        case ReadingState::Complete:
+            return "Complete";
+    }
+    return "Unknown";
+}
+
+std::string getReadingStateString() const;
+
+enum class ReadingState {
+        PlanToRead,
+        Reading,
+        Complete,
+        Dropped
+    };
