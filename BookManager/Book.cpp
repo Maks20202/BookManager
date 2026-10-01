@@ -26,15 +26,11 @@ void Book::setReleaseDate(int ReleaseDate_) {ReleaseDate = ReleaseDate_;}
 void Book::setLength(size_t Length_) {Length = Length_;}
 void Book::setRatings(const std::vector<int> &Ratings_) {Ratings = Ratings_;}
 
-double Book::getAvgRating() const {
-    if (Ratings.empty()) {
-        return 0.0;
-    }
+std::optional<double> Book::getAvgRating() const {
+    if (Ratings.empty()) return std::nullopt;
     double sum = 0;
-    for (const auto& rating : Ratings) {
-        sum += rating;
-    }
-    return std::round(sum / static_cast<double>(Ratings.size()) * 100)/100;
+    for (const auto& r : Ratings) sum += r;
+    return std::round(sum / static_cast<double>(Ratings.size()) * 100) / 100;
 }
 
 bool Book::compareDate(const Book &book1, const Book &book2) {
@@ -49,20 +45,28 @@ bool Book::compareDate(const Book &book1, const Book &book2) {
     }
 }
 
-bool Book::compareAvgRating(const Book &book1, const Book &book2) {
-    return book1.getAvgRating() > book2.getAvgRating();
+bool Book::compareAvgRating(const Book& a, const Book& b) {
+    auto ra = a.getAvgRating(), rb = b.getAvgRating();
+    if (!ra.has_value()) return false;
+    if (!rb.has_value()) return true;
+    return *ra > *rb;
 }
 
-Book &Book::operator+(const double rating) {
+bool Book::addRating(int rating) {
+    if (rating < 1 || rating > 10) return false;
     Ratings.push_back(rating);
-    return *this;
+    return true;
 }
 
 std::ostream& operator<<(std::ostream& os, const Book& book){
     os << "Book Title: " << book.getTitle()
     << "\nAuthor: " << book.getAuthor()
     << "\nRelease Date: " << book.getReleaseDate()
-    << "\nLength: " << book.getLength() << std::endl;
-    os << "Average Rating: " <<  book.getAvgRating() << std::endl;
+    << "\nLength: " << book.getLength() << "\n";
+    auto avg = book.getAvgRating();
+    if (avg.has_value())
+        os << "Average Rating: " << std::fixed << std::setprecision(2) << *avg << "\n";
+    else
+        os << "Unrated\n";
     return os;
 }

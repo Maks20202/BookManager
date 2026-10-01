@@ -13,7 +13,7 @@ class BookList {
     const std::vector<Book>& getBooks() const;
 
     void addBook(const Book& book);
-    double getAverageRating() const;
+    std::optional<double> getAverageRating() const;
     void sortByRating();
     void sortByDate();
 };

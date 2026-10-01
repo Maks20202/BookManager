@@ -11,12 +11,20 @@ void BookList::addBook(const Book& book) {
     books.push_back(book);
 }
 
-double BookList::getAverageRating() const{
+std::optional<double> BookList::getAverageRating() const {
     double sum = 0;
-    for (auto& book : books) {
-        sum += book.getAvgRating();
+    int count = 0;
+
+    for (const auto& book : books) {
+        auto rating = book.getAvgRating();
+        if (rating.has_value()) {
+            sum += *rating;
+            count++;
+        }
     }
-    return std::round(sum / static_cast<double>(books.size()) * 100)/100;
+
+    if (count == 0) return std::nullopt;  // no books have been rated at all
+    return std::round(sum / static_cast<double>(count) * 100) / 100;
 }
 
 void BookList::sortByRating() {
@@ -27,13 +35,15 @@ void BookList::sortByDate() {
     std::sort(books.begin(), books.end(), Book::compareDate);
 }
 
-std::ostream& operator<<(std::ostream& os, const BookList& books) {
-    const auto& cosek = books.getBooks();
-    os << "-------" << books.getName() << "-------" << std::endl;
-    os << "Average list rating: " << books.getAverageRating() << std::endl;
-    os << std::endl;
-    for (auto& book : cosek) {
-        os << book << std::endl;
-    }
+std::ostream& operator<<(std::ostream& os, const BookList& booklist) {
+    os << "-------" << booklist.getName() << "-------\n";
+    auto avg = booklist.getAverageRating();
+    if (avg.has_value())
+        os << "Average list rating: " << std::fixed << std::setprecision(2) << *avg << "\n";
+    else
+        os << "Unrated\n";
+    os << "\n";
+    for (const auto& book : booklist.getBooks())
+        os << book << "\n";
     return os;
 }

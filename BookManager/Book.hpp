@@ -2,6 +2,8 @@
 #include <string>
 #include <ostream>
 #include <vector>
+#include <optional>
+#include <iomanip>
 
 
 class Book {
@@ -36,11 +38,10 @@ public:
     void setLength(size_t Length);
     void setRatings(const std::vector<int>& Ratings);
 
-    double getAvgRating() const;
+    std::optional<double> getAvgRating() const;
     static bool compareDate(const Book& book1, const Book& book2);
-    static bool compareAvgRating(const Book& book1, const Book& book2);
-
-     Book& operator+(const double rating);
+    static bool compareAvgRating(const Book& a, const Book& b);
+    bool addRating(int rating);
 };
 
 std::ostream& operator<<(std::ostream& os, const Book& book);
