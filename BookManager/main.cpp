@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-    Book book1("J.R.R Tolkien","Lord of the Rings",1931,1000);
+    Book book1("Lord of the Rings","J.R.R Tolkien",1931,1000);
     Book book2("Aloppy", "flops", 1930, 10000);
     Book book3("Crimson Horizon", "Emily Carter", 2015, 380);
     Book book4("Echoes of Tomorrow", "Michael Reed", 2022, 610);
