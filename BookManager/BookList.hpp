@@ -1,5 +1,6 @@
 #pragma once
 #include "Book.hpp"
+#include "BookEntry.hpp"
 
 class BookList {
     std::vector<Book> books;
@@ -13,8 +14,8 @@ class BookList {
     const std::vector<Book>& getBooks() const;
 
     void addBook(const Book& book);
-    std::optional<double> getAverageRating() const;
-    void sortByRating();
+    //std::optional<double> getAverageRating() const;
+    //void sortByRating();
     void sortByDate();
 };
 

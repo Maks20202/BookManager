@@ -15,8 +15,6 @@ int main() {
     Book book10("Quantum Divide", "Liam Foster", 2024, 690);
 
     std::cout << book1 << std::endl;
-    book1.addRating(7);
-    book1.addRating(6);
     std::cout << book1 << std::endl;
 
     BookList books("Liked");

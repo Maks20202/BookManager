@@ -7,5 +7,4 @@ class Profile {
     std::string Bio;
     std::vector<BookList> Lists;
 
-
 };
